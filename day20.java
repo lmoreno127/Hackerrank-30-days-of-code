@@ -14,36 +14,36 @@ import static java.util.stream.Collectors.toList;
 
 public class Solution {
     public static void main(String[] args) throws IOException {
-          Scanner scan = new Scanner(System.in);
-     int numElements = scan.nextInt();
-     int elmArray[] = new int[numElements];
-     for (int i=0; i<numElements; i++) {
-         elmArray[i] = scan.nextInt();
-     }
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
-     int temp = 0, numOfSwaps = 0;
+        int n = Integer.parseInt(bufferedReader.readLine().trim());
 
-     for (int i=0; i<numElements; i++) {
-         for (int j=0; j<numElements-1; j++) {
-             if ( elmArray[j] > elmArray[j+1] ) {
-                 temp = elmArray[j];
-                 elmArray[j] = elmArray[j+1];
-                 elmArray[j+1] = temp;
-                 numOfSwaps++;
-             }
+        List<Integer> a = Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "))
+            .map(Integer::parseInt)
+            .collect(toList());
+
+        // Write your code here
+        int numberOfSwaps = 0;
+        for (int i = 0; i < n; i++) {
+         // Track number of elements swapped during a single array traversal
+         for (int j = 0; j < n - 1; j++) {
+           // Swap adjacent elements if they are in decreasing order
+          if (a.get(j) > a.get(j + 1)) {
+            int temp= a.get(j);
+            a.set(j, a.get(j+1));
+            a.set(j+1,temp);
+            numberOfSwaps++;
+          }
          }
-
-        // If no elements were swapped during a traversal, array is sorted
-            if (numOfSwaps == 0) {
-                break;
-            }
-     }
-
-     scan.close();
-
-     System.out.println("Array is sorted in " + numOfSwaps + " swaps.");
-     System.out.println("First Element: " + elmArray[0]);
-     System.out.println("Last Element: " + elmArray[elmArray.length-1]);
-    }
     
+    // If no elements were swapped during a traversal, array is sorted
+      if (numberOfSwaps == 0) {
+        break;
+       }
+    }  
+       System.out.println("Array is sorted in "+numberOfSwaps+" swaps.");
+       System.out.println("First Element: "+a.get(0));
+       System.out.println("Last Element: "+a.get(n-1));
+       bufferedReader.close();
+    }
 }
